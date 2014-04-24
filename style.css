@@ -1,0 +1,848 @@
+/* Styles go here */
+
+    body
+    {
+        font-family: Verdana;
+        font-size: 8pt;
+    }
+
+    /* The main DIV for the map */
+    .subway-map
+    {
+        margin: 0;
+        width: 800px;
+        height:610px;
+        background-color: white;
+    }
+
+    /* Text labels */
+    .text
+    {
+        text-decoration: none;
+        color: black;
+        
+    }
+    
+    .text45
+    {
+      text-decoration: none;
+      color: black;
+      margin: 0 0 10px 0px;
+      
+      -webkit-backface-visibility: hidden;
+
+      -webkit-transform: rotate(-45deg) translateZ(0);
+      -moz-transform: rotate(-45deg);
+      -ms-transform: rotate(-45deg);
+      -o-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      
+      -webkit-transform-origin: 50%  51%;
+      -moz-transform-origin: 50%  51%;
+      -ms-transform-origin: 50%  51%;
+      -o-transform-origin: 50%  51%;
+      transform-origin: 50% 51%;
+      
+    }
+
+    .text90
+    {
+      text-decoration: none;
+      color: black;
+      /*position: absolute;*/
+      text-align: left;
+      padding: 20px 0;
+
+      -webkit-transform: rotate(-90deg) translateZ(0);
+
+      -webkit-backface-visibility: hidden;
+      -moz-transform: rotate(-90deg);
+      -ms-transform: rotate(-90deg);
+      -o-transform: rotate(-90deg);
+      transform: rotate(-90deg);
+      
+      -webkit-transform-origin: 50%  51%;
+      -moz-transform-origin: 50%  51%;
+      -ms-transform-origin: 50%  51%;
+      -o-transform-origin: 50%  51%;
+      transform-origin: 50% 51%;
+    }
+
+    #legend
+    {
+        float: left;
+        width: 250px;
+        height:400px;
+    }
+
+    #legend div
+    {
+        height: 25px;
+    }
+
+    #legend span
+    {
+        margin: 5px 5px 5px 0;
+    }
+    .subway-map span
+    {
+        margin: 5px 5px 5px 0;
+    }
+
+#pup {
+  position:absolute;
+  z-index:4000; /* aaaalways on top*/
+  padding: 3px;
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 250px;
+  border: 1px solid black;
+  background-color: #777;
+  color: white;
+  font-size: 0.95em;
+}
+
+.pup {
+  position:absolute;
+  display: block;
+  z-index:4000; /* aaaalways on top*/
+  padding: 3px;
+  margin-left: 10px;
+  margin-top: 5px;
+  width: 250px;
+  border: 1px solid black;
+  background-color: #777;
+  color: white;
+  font-size: 0.95em;
+  float: left;
+}
+
+#tid {
+  position: absolute;
+  display: block;
+  top: 200px;
+  left: 340px;
+  z-index: 3000;
+}
+
+.flight-tracker {
+  position: absolute;
+  top: 60px;
+  left: 150px;
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 290px;
+  height: auto;
+  font-family: 'Ubuntu Mono';
+  font-weight: 400;
+  color: #4e4e4e;
+  border-radius: 32px / 28px;
+  -webkit-perspective: 320px;
+  -moz-perspective: 320px;
+  perspective: 320px;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-transform-origin: 50% 48px;
+  -moz-transform-origin: 50% 48px;
+  -ms-transform-origin: 50% 48px;
+  -o-transform-origin: 50% 48px;
+  transform-origin: 50% 48px;
+}
+
+.flight-tracker footer {
+  background-color: #289dd7;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #289dd7), color-stop(100%, #0e8acf));
+  background-image: -webkit-linear-gradient(#289dd7, #0e8acf);
+  background-image: linear-gradient(#289dd7, #0e8acf);
+  border-radius: 0 0 32px 32px / 0 0 28px 28px;
+  height: 53px;
+  color: white;
+  font-size: 11px;
+  text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  box-shadow: 0 10px 24px rgba(13, 25, 68, 0.7);
+  overflow: hidden;
+  -webkit-transform: translate3d(0px, -55px, 0px) rotateX(0deg);
+  -moz-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -ms-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -o-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  /*
+  -webkit-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  */
+}  
+
+.flight-tracker header {
+  background: transparent;
+  text-align: center;
+  border-radius: 32px 32px 0 0 / 28px 28px 0 0;
+  padding: 7px 15px;
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  -moz-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  -ms-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  -o-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-animation: fold-header 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-header 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-header 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+.flight-tracker header h1.logo {
+  display: block;
+  /*color: transparent;*/
+  color: black;
+  font: 0/0 a;
+  text-shadow: none;
+  width: 130px;
+  height: 20px;
+  background-repeat: no-repeat;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABBElEQVRYw2NgGAWjYBSMglEwCgYbkJWVzgTiO0D8nwCeJisrtRRI/0YTfw3EC2RlZU1ItlxGRkYVqPkCEDcD8RsgPwVI/wXSMUD6OxAXA/FDWVmZMyA1cnIyDTIy0nuA7PlAvBHkABkZqQ4pKSk5BQUFDnJ8XwTEfyCWgH1zB5WWuQfltwLxKSj/A8TXMh+xhNIXIP4FxPuBnghSUVFhx+sAOTkpV6CPFhHGMjlAQ6uIUyu9CKh2HhC3gEINrwO0tbXZgBrOERH/34GOiIL68D8x6oH4BBAfJiYmmOXkpJ2BihPwYaADooEJTRlC41cLNC9WXl5SczSLj4JRMApGwSgYlAAAUzSLUPzAPnQAAAAASUVORK5CYII=);
+  /*background-image: url("trainicon_64.png");*/
+}
+/*
+.flight-tracker header .flight-number {
+  position: absolute;
+  top: 7px;
+  right: 15px;
+  font-size: 18px;
+}
+.flight-tracker .flight-details {
+  margin: -1px 0 0;
+}
+.flight-tracker .flight-details table {
+  border: 0 none;
+  width: 100%;
+}
+.flight-tracker .flight-details table thead {
+  background: #bfbfbf;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  -moz-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  -ms-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  -o-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  -webkit-transform-origin: 50% 0%;
+  -moz-transform-origin: 50% 0%;
+  -ms-transform-origin: 50% 0%;
+  -o-transform-origin: 50% 0%;
+  transform-origin: 50% 0%;
+  -webkit-animation: fold-top 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-top 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-top 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+.flight-tracker .flight-details table thead th {
+  text-align: left;
+  font-size: 11px;
+  height: 28px;
+  font-weight: 400;
+  color: #289dd7;
+  vertical-align: bottom;
+  padding: 0 15px;
+}
+.flight-tracker .flight-details table thead th:last-child {
+  text-align: right;
+}
+.flight-tracker .flight-details table tbody {
+  background: #ebebeb;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  -moz-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  -ms-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  -o-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  -webkit-transform-origin: 50% 100%;
+  -moz-transform-origin: 50% 100%;
+  -ms-transform-origin: 50% 100%;
+  -o-transform-origin: 50% 100%;
+  transform-origin: 50% 100%;
+  -webkit-animation: fold-bottom 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-bottom 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-bottom 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+.flight-tracker .flight-details table tbody td {
+  font-size: 11px;
+  height: 28px;
+  vertical-align: top;
+  padding: 0 15px;
+}
+.flight-tracker .flight-details table tbody td:last-child {
+  text-align: right;
+}
+.flight-tracker .flight-duration {
+  padding: 7px 15px;
+  background: white;
+  -webkit-transform-origin: 50% 50%;
+  -moz-transform-origin: 50% 50%;
+  -ms-transform-origin: 50% 50%;
+  -o-transform-origin: 50% 50%;
+  transform-origin: 50% 50%;
+  -webkit-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -moz-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -ms-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -o-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+.flight-tracker .flight-duration .flight-end {
+  float: right;
+}
+*/
+
+/* .flight-tracker footer {
+  background-color: #289dd7;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #289dd7), color-stop(100%, #0e8acf));
+  background-image: -webkit-linear-gradient(#289dd7, #0e8acf);
+  background-image: linear-gradient(#289dd7, #0e8acf);
+  border-radius: 0 0 32px 32px / 0 0 28px 28px;
+  height: 53px;
+  color: white;
+  font-size: 11px;
+  text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  box-shadow: 0 10px 24px rgba(13, 25, 68, 0.7);
+  overflow: hidden;
+  -webkit-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -moz-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -ms-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -o-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+  -webkit-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: fold-footer 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+} */
+ .flight-tracker footer strong {
+  display: block;
+  font-weight: 400;
+  font-size: 24px;
+}
+/*
+.flight-tracker footer .flight-from {
+  position: absolute;
+  bottom: 12px;
+  left: 15px;
+}
+.flight-tracker footer .flight-to {
+  text-align: right;
+  position: absolute;
+  right: 15px;
+  bottom: 12px;
+}
+.flight-tracker footer .flight-progress {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -o-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  width: 100px;
+  height: 2px;
+  background: #015683;
+  border-radius: 1px;
+  box-shadow: 0 0 2px rgba(13, 25, 68, 0.4);
+  -webkit-animation: progress-bar 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  -moz-animation: progress-bar 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+  animation: progress-bar 12s cubic-bezier(0.165, 0.84, 0.44, 1) infinite;
+}
+*/
+/*
+.flight-tracker footer .flight-progress::before {
+  content: '\20';
+  display: block;
+  width: 0%;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  box-shadow: inset 0 0 1px rgba(13, 25, 68, 0.4);
+  -webkit-animation: progress 12s linear infinite;
+  -moz-animation: progress 12s linear infinite;
+  animation: progress 12s linear infinite;
+}
+.flight-tracker footer .flight-progress::after {
+  content: '\20';
+  display: block;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 1px;
+  box-shadow: 0 0 1px 1px white;
+  -webkit-animation: progress-track 12s linear infinite;
+  -moz-animation: progress-track 12s linear infinite;
+  animation: progress-track 12s linear infinite;
+}
+*/
+.flight-tracker .airplaine {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  -moz-transform: translate3d(-50%, -50%, 0);
+  -ms-transform: translate3d(-50%, -50%, 0);
+  -o-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  font-size: 48px;
+  text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  -webkit-animation: airplaine 12s infinite;
+  -moz-animation: airplaine 12s infinite;
+  animation: airplaine 12s infinite;
+  /*background-image: url("Flaticon_12611.png");*/
+}
+
+@-webkit-keyframes fold-header {
+  0%, 19% {
+    -webkit-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+
+  23%, 42% {
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -webkit-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+}
+@-moz-keyframes fold-header {
+  0%, 19% {
+    -moz-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+
+  23%, 42% {
+    -moz-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -moz-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+}
+@-o-keyframes fold-header {
+  0%, 19% {
+    -o-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+
+  23%, 42% {
+    -o-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -o-transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+}
+@keyframes fold-header {
+  0%, 19% {
+    transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+
+  23%, 42% {
+    transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    transform: translate3d(0px, 28px, 0px) rotateX(0deg);
+  }
+}
+@-webkit-keyframes fold-top {
+  0%, 19% {
+    background: #bfbfbf;
+    -webkit-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #bfbfbf;
+    -webkit-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+}
+@-moz-keyframes fold-top {
+  0%, 19% {
+    background: #bfbfbf;
+    -moz-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -moz-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #bfbfbf;
+    -moz-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+}
+@-o-keyframes fold-top {
+  0%, 19% {
+    background: #bfbfbf;
+    -o-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -o-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #bfbfbf;
+    -o-transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+}
+@keyframes fold-top {
+  0%, 19% {
+    background: #bfbfbf;
+    transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #bfbfbf;
+    transform: translate3d(0px, 28px, 0px) rotateX(-90deg);
+  }
+}
+@-webkit-keyframes fold-bottom {
+  0%, 19% {
+    background: #ebebeb;
+    -webkit-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #ebebeb;
+    -webkit-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+}
+@-moz-keyframes fold-bottom {
+  0%, 19% {
+    background: #ebebeb;
+    -moz-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -moz-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #ebebeb;
+    -moz-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+}
+@-o-keyframes fold-bottom {
+  0%, 19% {
+    background: #ebebeb;
+    -o-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    -o-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #ebebeb;
+    -o-transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+}
+@keyframes fold-bottom {
+  0%, 19% {
+    background: #ebebeb;
+    transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+
+  23%, 42% {
+    background: white;
+    transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    background: #ebebeb;
+    transform: translate3d(0px, -28px, 0px) rotateX(90deg);
+  }
+}
+@-webkit-keyframes fold-footer {
+  0%, 19% {
+    -webkit-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+
+  24%, 42% {
+    -webkit-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -webkit-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+}
+@-moz-keyframes fold-footer {
+  0%, 19% {
+    -moz-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+
+  24%, 42% {
+    -moz-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -moz-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+}
+@-o-keyframes fold-footer {
+  0%, 19% {
+    -o-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+
+  24%, 42% {
+    -o-transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    -o-transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+}
+@keyframes fold-footer {
+  0%, 19% {
+    transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+
+  24%, 42% {
+    transform: translate3d(0px, 0px, 0px) rotateX(0deg);
+  }
+
+  45%, 100% {
+    transform: translate3d(0px, -28px, 0px) rotateX(0deg);
+  }
+}
+@-webkit-keyframes progress-bar {
+  0%, 7% {
+    opacity: 0;
+  }
+
+  10%, 42% {
+    opacity: 1;
+  }
+
+  45%, 100% {
+    opacity: 0;
+  }
+}
+@-moz-keyframes progress-bar {
+  0%, 7% {
+    opacity: 0;
+  }
+
+  10%, 42% {
+    opacity: 1;
+  }
+
+  45%, 100% {
+    opacity: 0;
+  }
+}
+@-o-keyframes progress-bar {
+  0%, 7% {
+    opacity: 0;
+  }
+
+  10%, 42% {
+    opacity: 1;
+  }
+
+  45%, 100% {
+    opacity: 0;
+  }
+}
+@keyframes progress-bar {
+  0%, 7% {
+    opacity: 0;
+  }
+
+  10%, 42% {
+    opacity: 1;
+  }
+
+  45%, 100% {
+    opacity: 0;
+  }
+}
+@-webkit-keyframes progress {
+  0%, 10% {
+    width: 0%;
+  }
+
+  40%, 100% {
+    width: 100%;
+  }
+}
+@-moz-keyframes progress {
+  0%, 10% {
+    width: 0%;
+  }
+
+  40%, 100% {
+    width: 100%;
+  }
+}
+@-o-keyframes progress {
+  0%, 10% {
+    width: 0%;
+  }
+
+  40%, 100% {
+    width: 100%;
+  }
+}
+@keyframes progress {
+  0%, 10% {
+    width: 0%;
+  }
+
+  40%, 100% {
+    width: 100%;
+  }
+}
+@-webkit-keyframes progress-track {
+  0%, 10% {
+    left: 0%;
+  }
+
+  40%, 100% {
+    left: 100%;
+  }
+}
+@-moz-keyframes progress-track {
+  0%, 10% {
+    left: 0%;
+  }
+
+  40%, 100% {
+    left: 100%;
+  }
+}
+@-o-keyframes progress-track {
+  0%, 10% {
+    left: 0%;
+  }
+
+  40%, 100% {
+    left: 100%;
+  }
+}
+@keyframes progress-track {
+  0%, 10% {
+    left: 0%;
+  }
+
+  40%, 100% {
+    left: 100%;
+  }
+}
+@-webkit-keyframes airplaine {
+  0%, 50% {
+    left: -20%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+
+  65%, 85% {
+    left: 50%;
+    text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  }
+
+  100% {
+    left: 120%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+}
+@-moz-keyframes airplaine {
+  0%, 50% {
+    left: -20%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+
+  65%, 85% {
+    left: 50%;
+    text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  }
+
+  100% {
+    left: 120%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+}
+@-o-keyframes airplaine {
+  0%, 50% {
+    left: -20%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+
+  65%, 85% {
+    left: 50%;
+    text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  }
+
+  100% {
+    left: 120%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+}
+@keyframes airplaine {
+  0%, 50% {
+    left: -20%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+
+  65%, 85% {
+    left: 50%;
+    text-shadow: 1px 1px 2px rgba(13, 25, 68, 0.4);
+  }
+
+  100% {
+    left: 120%;
+    text-shadow: 20px 20px 8px rgba(13, 25, 68, 0.4);
+  }
+}
