@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="nb">
+
+  <head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+        <!--<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">-->
+        <link href="style.css" rel="stylesheet" />
+		<!--<link href="smallipop.css" rel="stylesheet" media="all" type="text/css" title="Screen" />-->
+		<link href="footable.core.min.css" rel="stylesheet" type="text/css" />
+		<link href="footable.standalone.css" rel="stylesheet" type="text/css" />
+		
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+          <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+          <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <!--<script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>-->
+		<!--<script type="text/javascript" src="modernizr.custom.59020.js"></script>-->
+    
+	<!--<script type="text/javascript" src="jquery.smallipop.min.js"/></script>-->
+	<script type="text/javascript" src="footable.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+	<script type="text/javascript" src="simpleStorage.js"></script>
+	<script type="text/javascript" src="momentWithLangs.min.2.6.0.js"></script>
+	<script type="text/javascript">
+	  $(document).ready(function() {
+		var togData = [];
+		
+		$.getJSON("stations.json", function(station) {
+		    $.each(station, function(stationName, stationId) {
+			  if (stationId !== "" && stationId === '6274340') {
+				$.ajax({
+				  //url: "http://reis.ruter.no/ReisRest/RealTime/GetRealTimeData/" + $(this).attr('id'),// + "?callback=?",
+				  url: "http://api.trafikanten.no/reisrest/realtime/getrealtimedata/" + stationId + "?callback=?",
+				  type: 'GET',
+				  dataType: 'jsonp',
+				  //jsonp: 'callback',
+				  //jsonpCallback: 'togtider',
+				  //async: false,
+				  success: function(departureInfo) {
+					var tableRow = [];
+					//tog.push("<table id='sid" + stationId + "' class='footable toggle-circle' border='1'>");
+					//tog.push("<thead><tr><th data-hide='phone'>Tog fra</th><th>Tog til</th><th>Platform</th><th data-hide='phone'>Linje</th><th data-hide='phone,tablet'>Dir</th><th data-toggle='true'>Forventet avg</th><th data-hide='phone,tablet'>Oppr. avg</th><th data-hide'phone,tablet'>Minutt(er) forsinket</th></tr></thead><tbody>");
+					$.each(departureInfo, function(key, details) {
+					  moment.lang('nb');
+					  var dato1 = moment(details.ExpectedDepartureTime);//.format("ddd H:mm");//.lang('no');
+					  var dato2 = moment(details.AimedDepartureTime);//.format("ddd H:mm");
+					  var diff = dato1.diff(dato2, 'minutes');
+					  tableRow.push("<tr><td>" + stationName + "</td>");
+					  tableRow.push("<td>" + details.DestinationName + "</td>");
+					  var cellTagDeparture = "<td>";
+					  if (diff > 0)
+					    cellTagDeparture = "<td style='color:red'>";
+					  tableRow.push(cellTagDeparture + dato1.format('ddd H:mm') + "</td>");
+					  tableRow.push("<td>" + details.DeparturePlatformName + "</td>");
+					  tableRow.push("<td>" + details.PublishedLineName + "</td>");
+					  var direction = "&Oslash;st";
+					  if (details.DirectionRef === 2)
+					    direction = "Vest";
+					  tableRow.push("<td>" + direction + "</td>");
+					  //tableRow.push("<td>" + dato1.format('ddd H:mm') + "</td>");
+					  tableRow.push("<td>" + dato2.format('ddd H:mm') + "</td>");
+					  tableRow.push("<td>" + diff + "</td></tr>");
+					  //tog.push("<td>" + val.Delay + "</td></tr>");
+					});
+					//tog.push("</tbody></table>");
+					//$('<div/>', {html: tog.join("")}).appendTo('#pup');
+				    //$("<div class='pup'/>", {html: tog.join("")}).appendTo('body');
+				    //$("<div/>", {html: tog.join("")}).appendTo('body');
+					//$('<div/>', {html: tog.join("")}).appendTo('#'+stationId);
+					//simpleStorage.set(stationId, tog.join(""));
+					//$('#' + stationId).footable();
+					//$('#sid').footable();
+					$('#sid tbody').append(tableRow.join("")).trigger('footable_redraw');
+				  },
+				  error: function(x, y, z) {
+					alert(z);
+					}
+				});
+				//$('.footable').footable();
+			  }
+			});
+		  });
+		  
+		  //$('span.station').each(function() {
+		    //var sId = $(this).attr('id');
+			//var tooltipData = simpleStorage.get(sId);
+			//if (sId !== undefined && sId !== "" && tooltipData !== undefined) {
+			    //$(tooltipData).appendTo(this);
+			  //$(this).mouseover(function(e) {
+					//$($(this).data('tooltid')).css({left: e.pageX + 1, top: e.pageY + 1}).stop().show(100);
+			  //});
+			//}
+			  //});
+			//$(this).on('mouseover', $(this), "nhpup.popup($('#stopId" + stationId + "').html(), {'width': 400});");
+//			$(this).hover(function() {
+//					$(this).attr('onmouseover', "nhpup.popup($('#stopId" + stationId + "').html(), {'width': 400});");
+//				}, function() {
+//					$(this).attr('onmouseover', '');
+//				}
+//			);
+		  //});
+		
+	  });
+		
+	//$(function() {
+	  //$('.footable').footable();
+	//});
+	
+		function togtider(data) {
+			//alert("Togtider: " + data.length);
+			var items = [];
+			  $.each(data, function(key, val) {
+			    items.push("<li>" + key + ":" + val.DestinationName + "</li>");
+			  });
+			  $('<ul/>', {html: items.join("")}).appendTo('body');
+		}
+	</script>
+  </head>
+
+  <body>
+    <div class="subway-map" data-columns="35" data-rows="30" data-cellSize="20" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
+        <ul data-color="#D64587" data-label="L1">
+            <li data-coords="5,27" data-marker="interchange" data-labelPos="E"><a id="6274360" href="">Spikkestad</a></li>  
+            <li labelClass="text smallipop" data-coords="5,26" data-marker="station" data-labelPos="E"><a id="6274340" href="">R&oslash;yken</a></li>
+            <li labelClass="text smallipop" data-coords="5,25" data-marker="station" data-labelPos="E"><a id="6274330" href="">Hallenskog</a></li>
+            <li labelClass="text smallipop" data-coords="5,24" data-marker="station" data-labelPos="E"><a id="2200800" href="">Heggedal</a></li>
+            <li labelClass="text station" data-coords="5,23" data-marker="station" data-labelPos="E"><a id="2200700" href="">Gullhella</a></li>
+            <li labelClass="text station" data-coords="5,22" data-marker="station" data-labelPos="E"><a id="2200600" href="">Bodivann</a></li>
+            <li data-coords="5,17"></li>
+            <li data-coords="6.6,15" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="2200500">Asker</a></li>
+            <li data-coords="7.7,14" data-marker="@station" data-labelPos="W"><a href="2200400">H&oslash;n</a></li> <!-- marker-only node -->
+            <li data-coords="8.7,13" data-marker="@station" data-labelPos="W"><a href="2200300">Vak&aring;s</a></li>
+            <li data-coords="9.6,12" data-marker="@station" data-labelPos="W"><a href="2200200">Hvalstad</a></li>
+            <li data-coords="10.5,11" data-marker="@station" data-labelPos="W"><a href="2200100">Billingstad</a></li>
+            <li data-coords="11.4,10" data-marker="@station" data-labelPos="W"><a href="2190600">Slependen</a></li>
+            <li data-coords="12.2,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="2190400">Sandvika</a></li>
+            <li data-coords="13.3,8" data-marker="@station" data-labelPos="W"><a href="">Blommenholm</a></li>
+            <li data-coords="14.2,7" data-marker="@station" data-labelPos="W"><a href="">H&oslash;vik</a></li>
+            <li data-coords="15.1,6" data-marker="@station" data-labelPos="W"><a href="">Stabekk</a></li>
+            <li data-coords="16,5"></li>
+            <li data-coords="18,5" data-marker="interchange" data-labelPos="NW"><a href="3012550">Lysaker</a></li>
+            <li data-coords="19,5" data-marker="interchange" data-labelPos="NW"><a href="3012500">Sk&oslash;yen</a></li>
+            <li data-coords="20,5" data-marker="interchange" data-labelPos="NW"><a href="3010030">Nationaltheatret</a></li>
+            <li data-coords="21,5" data-marker="interchange" data-labelPos="NW"><a href="3010010">Oslo S</a></li>
+            <li data-coords="22,5" data-marker="station" data-labelPos="NW"><a href="3011460">Bryn</a></li>
+            <li data-coords="23,5" data-marker="station" data-labelPos="NW"><a href="3012050">Alna</a></li>
+            <li data-coords="24,5" data-marker="station" data-labelPos="NW"><a href="3011960">Nyland</a></li>
+            <li data-coords="25,5" data-marker="station" data-labelPos="NW"><a href="3011970">Grorud</a></li>
+            <li data-coords="26,5" data-marker="station" data-labelPos="NW"><a href="3011750">Haugenstua</a></li>
+            <li data-coords="27,5" data-marker="station" data-labelPos="NW"><a href="3011660">H&oslash;ybr&aring;ten</a></li>
+            <li data-coords="28,5" data-marker="station" data-labelPos="NW"><a href="3011770">L&oslash;renskog</a></li>
+            <li data-coords="29,5" data-marker="station" data-labelPos="NW"><a href="2300230">Hanaborg</a></li>
+            <li data-coords="30,5" data-marker="station" data-labelPos="NW"><a href="2300200">Fjellhamar</a></li>
+            <li data-coords="31,5" data-marker="station" data-labelPos="NW"><a href="2310100">Str&oslash;mmen</a></li>
+            <li data-coords="32,5" data-marker="station" data-labelPos="NW"><a href="2310200">Sagdalen</a></li>
+            <li data-coords="33,5" data-marker="interchange" data-labelPos="NW"><a href="2310300">Lillestr&oslash;m</a></li>
+        </ul>
+        
+        <ul data-color="#A61E27" data-label="R10" data-shiftCoords="0,2">
+            <li data-coords="1,22.2" data-marker="interchange"><a href="">&nbsp;</a></li>
+            <li data-coords="7.5,15" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="13,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="16,5" data-dir="N"></li>
+            <li data-coords="18,6" data-marker="@interchange"><a href=""></a></li>
+            <li data-coords="33,5"></li>
+            <!--<li data-coords="19,5" data-marker="interchange"><a href="">&nbsp;</a></li>-->
+        </ul>
+        <ul data-color="#D32027" data-label="L12" data-shiftCoords="0,4">
+            <li data-coords="1,23.2" data-marker="interchange"><a href="">&nbsp;</a></li>
+            <li data-coords="8.4,15" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="13.8,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="16,5" data-dir="N"></li>
+            <li data-coords="18,6" data-marker="@interchange"><a href=""></a></li>
+            <li data-coords="33,5"></li>
+            <!--<li data-coords="19,5" data-marker="interchange"><a href="">&nbsp;</a></li>-->
+        </ul>
+        <ul data-color="#E37C25" data-label="L13" data-shiftCoords="0,6">
+            <li labelClass="text90" data-coords="1,24.2" data-marker="interchange"><a href="">Drammen&nbsp;</a></li>
+            <li labelClass="text90" data-coords="2,20.7" data-marker="@station"><a href="">Braker&oslash;ya</a></li>
+            <li labelClass="text90" data-coords="3,19.6" data-marker="@station"><a href="">Lier</a></li>
+            <li data-coords="9.2,15" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="14.6,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="16,5" data-dir="N"></li>
+            <li data-coords="18,6" data-marker="@interchange"><a href=""></a></li>
+            <li data-coords="33,5"></li>
+            <!--<li data-coords="19,5" data-marker="interchange"><a href="">&nbsp;</a></li>-->
+        </ul>
+        <ul data-color="#F3A41D" data-label="L14" data-shiftCoords="0,8">
+            <li data-coords="10,15" data-marker="interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="15.4,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="">&nbsp;</a></li>
+            <li data-coords="16,5" data-dir="N"></li>
+            <li data-coords="18,6" data-marker="@interchange"><a href=""></a></li>
+            <li data-coords="33,5"></li>
+            <!--<li data-coords="19,5" data-marker="interchange"><a href="">&nbsp;</a></li>-->
+        </ul>
+        
+        <ul><!-- Lysaker -->
+          <li data-coords="18,5.8" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="18,6.6" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="18,7.4" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="18,8.2" data-marker="@interchange">&nbsp;</li>
+        </ul>
+        <ul><!-- Sk�yen -->
+          <li data-coords="19,5.8" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="19,6.6" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="19,7.4" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="19,8.2" data-marker="@interchange">&nbsp;</li>
+        </ul>
+        <ul><!-- Nationaltheatret -->
+          <li data-coords="20,5.8" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="20,6.6" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="20,7.4" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="20,8.2" data-marker="@interchange">&nbsp;</li>
+        </ul>
+        <ul><!-- Oslo S -->
+          <li data-coords="21,5.8" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="21,6.6" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="21,7.4" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="21,8.2" data-marker="@interchange">&nbsp;</li>
+        </ul>
+        <ul><!-- Lillestr�m -->
+          <li data-coords="33,5.8" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="33,6.6" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="33,7.4" data-marker="@interchange">&nbsp;</li>
+          <li data-coords="33,8.2" data-marker="@interchange">&nbsp;</li>
+        </ul>
+<!--
+        <ul data-color="#DF013A" data-label="R10">
+            <li data-coords="18,6" data-marker="@interchange"><a href=""></a></li>
+            <li data-coords="19,6" data-marker="interchange"><a href=""></a></li>
+            <li data-coords="20,6" data-marker="interchange"><a href=""></a></li>
+            <li data-coords="21,6" data-marker="interchange"><a href=""></a></li>
+        </ul>
+-->
+
+    </div>
+    <div id="legend"></div>
+
+	<div class="flight-tracker">
+	  <header><b>CE Togtider</b></header>
+	  <footer>
+	    <span class="airplaine"><img alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAACPUlEQVR42u3Wv2sUURAH8Jcgov9AEt/3+51siIJ4hZ1NtBARRAMKamMQSQwqlhFJYaOIBCw8QRTlCu1sVETxB6hYKASxEUELiRCwiARELQ5yKMbi3iVLqpjbO5v5wBR7u/duZnhvbkNwzjnnnHPOOeecc84555xzrqFDiiclTEqoSphvMv5IuCpp2Ax3JP78h+9+knA+y+LGtlUv4W4BRS8UT3K/GQ5IqC3zO98lXCc5CmB7jNFCCJ1tKj4O15PgfTMMSnifkvoixX1msdJI1IzjZjjcKMwMj0julvCm8QyJG/393V2pqI+9vdhD4mG6XyU5ZMbxfAPM4s7/tvdJPE9JDKTdcCo15Er9PpESnc3tmFepATvqz8Sjiw3gFjMcT9dnQgjBLA6k62e5NWYXmxBnzHiR5C4Am/v6urrbuAPwLSXykuSohKlGwRJOLDkeZTKelvArXb+W4ojED7kGrJVQTrthWoojJF6k+7XU4PIyjsVvKc5I+JxymavPqLg3hLCqyAZUCzz/8yGETgnXilxzScxJuCRh0ozHQggdzc6AtxJ+FBUAKGFMwtdWBIlpMk40fs+MZ5ucARyScKu4WLeN5IZi11wMs1gheSj32c1SqbR6xQ3IsqwnNweKiKksy9ZIeNyqI0Dicn5WpKG5cmY4mBtsTYdZrJj1bJLwrsUNqEkYK+jvkOslXJDiPSk+bT5w2yxuNcNg/W0wPilo3QdmOGLGc2ZW8pd455xzzjnnnHPOOeecc8455xb8BeluHH12ibMkAAAAAElFTkSuQmCC" /></span>
+	  </footer>
+	</div>
+	<div id="tid">
+		<table id="sid" class="footable toggle-circle">
+			<thead>
+			  <tr>
+			    <th data-toggle="true" data-hide="phone">Tog fra</th>
+				<th>Tog til</th>
+				<th>Forventet avg</th>
+				<th>Spor</th>
+				<th data-hide="phone">Linje</th>
+				<th data-hide="phone,tablet">Retn</th>
+				<!--<th data-toggle="true">Forventet avg</th>-->
+				<th data-hide="phone,tablet">Oppr. avg</th>
+				<th data-hide="phone,tablet">Forsinket (min)</th>
+			  </tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+
+    <script type="text/javascript">
+        $(".subway-map").subwayMap({ debug: true });
+		$(function() {
+		  $('.footable').footable();
+		});
+    </script>
+  </body>
+
+</html>

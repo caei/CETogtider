@@ -1,0 +1,41 @@
+{
+  "name": "CETogtider",
+  "version": "0.0.1",
+  "description": "Sanntidsinfo for togtider på østlandet",
+  "maintainers": [
+    {
+      "name": "Cato Eik",
+      "email": "catoeik@gmail.com",
+      "url": "http://www.catoeik.com/"
+    }
+  ],
+  "author": {
+    "name": "Cato Eik",
+    "email": "catoeik@gmail.com"
+  },
+  "contributors": [
+    {
+      "name": "Cato Eik",
+      "email": "catoeik@gmail.com"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/caei/CETogtider.git"
+  },
+  "keywords": [
+    "CETogtider",
+    "togtider",
+    "sanntid",
+    "realtime",
+    "mobile",
+    "touch"
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://opensource.org/licenses/MIT"
+    }
+  ],
+  "homepage": "https://github.com/caei/CETogtider"
+}
