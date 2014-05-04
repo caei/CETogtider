@@ -25,6 +25,7 @@
     
 	<!--<script type="text/javascript" src="jquery.smallipop.min.js"/></script>-->
 	<script type="text/javascript" src="footable.js"></script>
+	<script type="text/javascript" src="hammer.min.1.0.10.js"></script>
     <script type="text/javascript" src="script.js"></script>
 	<script type="text/javascript" src="simpleStorage.js"></script>
 	<script type="text/javascript" src="momentWithLangs.min.2.6.0.js"></script>
@@ -61,7 +62,7 @@
 					  tableRow.push("<td>" + details.DeparturePlatformName + "</td>");
 					  tableRow.push("<td>" + details.PublishedLineName + "</td>");
 					  var direction = "&Oslash;st";
-					  if (details.DirectionRef === 2)
+					  if (details.DirectionRef === "2")
 					    direction = "Vest";
 					  tableRow.push("<td>" + direction + "</td>");
 					  //tableRow.push("<td>" + dato1.format('ddd H:mm') + "</td>");
@@ -77,6 +78,7 @@
 					//simpleStorage.set(stationId, tog.join(""));
 					//$('#' + stationId).footable();
 					//$('#sid').footable();
+					$('#sid tbody tr').remove();
 					$('#sid tbody').append(tableRow.join("")).trigger('footable_redraw');
 				  },
 				  error: function(x, y, z) {
@@ -88,7 +90,9 @@
 			});
 		  });
 		  
-		  //$('span.station').each(function() {
+		  $('a.station').click(function() {
+		    populateTable($(this).attr('id'));
+		  });
 		    //var sId = $(this).attr('id');
 			//var tooltipData = simpleStorage.get(sId);
 			//if (sId !== undefined && sId !== "" && tooltipData !== undefined) {
@@ -121,46 +125,107 @@
 			  });
 			  $('<ul/>', {html: items.join("")}).appendTo('body');
 		}
+		
+		function getJsonData(stationName) {
+			$.getJSON("stations.json", {key: stationName}, function(result) {
+				$.each(result, function(key, value) {
+			      alert("JSON result: " + key + ": " + value);
+				});
+			});
+		}
+		
+		function populateTable(stationId) {
+			var stationName = "";
+			$.getJSON("stations.json", function(result) {
+				$.each(result, function(sName, sId) {
+					if (stationId === sId) {
+						stationName = sName;
+						//alert("Stasjonsnavn: " + stationName);
+						$.ajax({
+						  //url: "http://reis.ruter.no/ReisRest/RealTime/GetRealTimeData/" + $(this).attr('id'),// + "?callback=?",
+						  url: "http://api.trafikanten.no/reisrest/realtime/getrealtimedata/" + sId + "?callback=?",
+						  type: 'GET',
+						  dataType: 'jsonp',
+						  //jsonp: 'callback',
+						  //jsonpCallback: 'togtider',
+						  //async: false,
+						  success: function(departureInfo) {
+							var tableRow = [];
+							$.each(departureInfo, function(key, details) {
+							  moment.lang('nb');
+							  var dato1 = moment(details.ExpectedDepartureTime);//.format("ddd H:mm");//.lang('no');
+							  var dato2 = moment(details.AimedDepartureTime);//.format("ddd H:mm");
+							  var diff = dato1.diff(dato2, 'minutes');
+							  tableRow.push("<tr><td>" + stationName + "</td>");
+							  tableRow.push("<td>" + details.DestinationName + "</td>");
+							  var cellTagDeparture = "<td>";
+							  if (diff > 0)
+								cellTagDeparture = "<td style='color:red'>";
+							  tableRow.push(cellTagDeparture + dato1.format('ddd H:mm') + "</td>");
+							  tableRow.push("<td>" + details.DeparturePlatformName + "</td>");
+							  tableRow.push("<td>" + details.PublishedLineName + "</td>");
+							  var direction = "&Oslash;st";
+							  if (details.DirectionRef === "2")
+								direction = "Vest";
+							  tableRow.push("<td>" + direction + "</td>");
+							  //tableRow.push("<td>" + dato1.format('ddd H:mm') + "</td>");
+							  tableRow.push("<td>" + dato2.format('ddd H:mm') + "</td>");
+							  tableRow.push("<td>" + diff + "</td></tr>");
+							  //tog.push("<td>" + val.Delay + "</td></tr>");
+							});
+							$('#sid tbody tr').remove();
+							$('#sid tbody').append(tableRow.join("")).trigger('footable_redraw');
+						  },
+						  error: function(x, y, z) {
+							alert(z);
+							}
+						});
+						return false;
+					}
+				});
+			});
+
+		}
 	</script>
   </head>
 
   <body>
     <div class="subway-map" data-columns="35" data-rows="30" data-cellSize="20" data-legendId="legend" data-textClass="text" data-gridNumbers="true" data-grid="false" data-lineWidth="8">
         <ul data-color="#D64587" data-label="L1">
-            <li data-coords="5,27" data-marker="interchange" data-labelPos="E"><a id="6274360" href="">Spikkestad</a></li>  
-            <li labelClass="text smallipop" data-coords="5,26" data-marker="station" data-labelPos="E"><a id="6274340" href="">R&oslash;yken</a></li>
-            <li labelClass="text smallipop" data-coords="5,25" data-marker="station" data-labelPos="E"><a id="6274330" href="">Hallenskog</a></li>
-            <li labelClass="text smallipop" data-coords="5,24" data-marker="station" data-labelPos="E"><a id="2200800" href="">Heggedal</a></li>
-            <li labelClass="text station" data-coords="5,23" data-marker="station" data-labelPos="E"><a id="2200700" href="">Gullhella</a></li>
-            <li labelClass="text station" data-coords="5,22" data-marker="station" data-labelPos="E"><a id="2200600" href="">Bodivann</a></li>
+            <li labelClass="text station" data-coords="5,27" data-marker="interchange" data-labelPos="E"><a id="6274360" href="#">Spikkestad</a></li>  
+            <li labelClass="text station" data-coords="5,26" data-marker="station" data-labelPos="E"><a id="6274340" href="#">R&oslash;yken</a></li>
+            <li labelClass="text station" data-coords="5,25" data-marker="station" data-labelPos="E"><a id="6274330" href="#">Hallenskog</a></li>
+            <li labelClass="text station" data-coords="5,24" data-marker="station" data-labelPos="E"><a id="2200800" href="#">Heggedal</a></li>
+            <li labelClass="text station" data-coords="5,23" data-marker="station" data-labelPos="E"><a id="2200700" href="#">Gullhella</a></li>
+            <li labelClass="text station" data-coords="5,22" data-marker="station" data-labelPos="E"><a id="2200600" href="#">Bodivann</a></li>
             <li data-coords="5,17"></li>
-            <li data-coords="6.6,15" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="2200500">Asker</a></li>
-            <li data-coords="7.7,14" data-marker="@station" data-labelPos="W"><a href="2200400">H&oslash;n</a></li> <!-- marker-only node -->
-            <li data-coords="8.7,13" data-marker="@station" data-labelPos="W"><a href="2200300">Vak&aring;s</a></li>
-            <li data-coords="9.6,12" data-marker="@station" data-labelPos="W"><a href="2200200">Hvalstad</a></li>
-            <li data-coords="10.5,11" data-marker="@station" data-labelPos="W"><a href="2200100">Billingstad</a></li>
-            <li data-coords="11.4,10" data-marker="@station" data-labelPos="W"><a href="2190600">Slependen</a></li>
-            <li data-coords="12.2,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a href="2190400">Sandvika</a></li>
-            <li data-coords="13.3,8" data-marker="@station" data-labelPos="W"><a href="">Blommenholm</a></li>
-            <li data-coords="14.2,7" data-marker="@station" data-labelPos="W"><a href="">H&oslash;vik</a></li>
-            <li data-coords="15.1,6" data-marker="@station" data-labelPos="W"><a href="">Stabekk</a></li>
+            <li labelClass="text station" data-coords="6.6,15" data-marker="@interchange" data-labelPos="W"><a id="2200500" href="#">Asker</a></li>
+            <li labelClass="text station" data-coords="7.7,14" data-marker="@station" data-labelPos="W"><a id="2200400" href="#">H&oslash;n</a></li> <!-- marker-only node -->
+            <li labelClass="text station" data-coords="8.7,13" data-marker="@station" data-labelPos="W"><a id="2200300" href="#">Vak&aring;s</a></li>
+            <li labelClass="text station" data-coords="9.6,12" data-marker="@station" data-labelPos="W"><a id="2200200" href="#">Hvalstad</a></li>
+            <li labelClass="text station" data-coords="10.5,11" data-marker="@station" data-labelPos="W"><a id="2200100" href="#">Billingstad</a></li>
+            <li labelClass="text station" data-coords="11.4,10" data-marker="@station" data-labelPos="W"><a id="2190600" href="#">Slependen</a></li>
+            <li labelClass="text station" data-coords="12.2,9" data-marker="@interchange" data-labelPos="W" data-markerInfo=""><a id="2190400" href="#">Sandvika</a></li>
+            <li labelClass="text station" data-coords="13.3,8" data-marker="@station" data-labelPos="W"><a id="" href="#">Blommenholm</a></li>
+            <li labelClass="text station" data-coords="14.2,7" data-marker="@station" data-labelPos="W"><a id="" href="#">H&oslash;vik</a></li>
+            <li labelClass="text station" data-coords="15.1,6" data-marker="@station" data-labelPos="W"><a id="" href="#">Stabekk</a></li>
             <li data-coords="16,5"></li>
-            <li data-coords="18,5" data-marker="interchange" data-labelPos="NW"><a href="3012550">Lysaker</a></li>
-            <li data-coords="19,5" data-marker="interchange" data-labelPos="NW"><a href="3012500">Sk&oslash;yen</a></li>
-            <li data-coords="20,5" data-marker="interchange" data-labelPos="NW"><a href="3010030">Nationaltheatret</a></li>
-            <li data-coords="21,5" data-marker="interchange" data-labelPos="NW"><a href="3010010">Oslo S</a></li>
-            <li data-coords="22,5" data-marker="station" data-labelPos="NW"><a href="3011460">Bryn</a></li>
-            <li data-coords="23,5" data-marker="station" data-labelPos="NW"><a href="3012050">Alna</a></li>
-            <li data-coords="24,5" data-marker="station" data-labelPos="NW"><a href="3011960">Nyland</a></li>
-            <li data-coords="25,5" data-marker="station" data-labelPos="NW"><a href="3011970">Grorud</a></li>
-            <li data-coords="26,5" data-marker="station" data-labelPos="NW"><a href="3011750">Haugenstua</a></li>
-            <li data-coords="27,5" data-marker="station" data-labelPos="NW"><a href="3011660">H&oslash;ybr&aring;ten</a></li>
-            <li data-coords="28,5" data-marker="station" data-labelPos="NW"><a href="3011770">L&oslash;renskog</a></li>
-            <li data-coords="29,5" data-marker="station" data-labelPos="NW"><a href="2300230">Hanaborg</a></li>
-            <li data-coords="30,5" data-marker="station" data-labelPos="NW"><a href="2300200">Fjellhamar</a></li>
-            <li data-coords="31,5" data-marker="station" data-labelPos="NW"><a href="2310100">Str&oslash;mmen</a></li>
-            <li data-coords="32,5" data-marker="station" data-labelPos="NW"><a href="2310200">Sagdalen</a></li>
-            <li data-coords="33,5" data-marker="interchange" data-labelPos="NW"><a href="2310300">Lillestr&oslash;m</a></li>
+            <li labelClass="text station" data-coords="18,5" data-marker="interchange" data-labelPos="NW"><a id="3012550" href="#">Lysaker</a></li>
+            <li labelClass="text station" data-coords="19,5" data-marker="interchange" data-labelPos="NW"><a id="3012500" href="#">Sk&oslash;yen</a></li>
+            <li labelClass="text station" data-coords="20,5" data-marker="interchange" data-labelPos="NW"><a id="3010030" href="#">Nationaltheatret</a></li>
+            <li labelClass="text station" data-coords="21,5" data-marker="interchange" data-labelPos="NW"><a id="3010010" href="#">Oslo S</a></li>
+            <li labelClass="text station" data-coords="22,5" data-marker="station" data-labelPos="NW"><a id="3011460" href="#">Bryn</a></li>
+            <li labelClass="text station" data-coords="23,5" data-marker="station" data-labelPos="NW"><a id="3012050" href="#">Alna</a></li>
+            <li labelClass="text station" data-coords="24,5" data-marker="station" data-labelPos="NW"><a id="3011960" href="#">Nyland</a></li>
+            <li labelClass="text station" data-coords="25,5" data-marker="station" data-labelPos="NW"><a id="3011970" href="#">Grorud</a></li>
+            <li labelClass="text station" data-coords="26,5" data-marker="station" data-labelPos="NW"><a id="3011750" href="#">Haugenstua</a></li>
+            <li labelClass="text station" data-coords="27,5" data-marker="station" data-labelPos="NW"><a id="3011660" href="#">H&oslash;ybr&aring;ten</a></li>
+            <li labelClass="text station" data-coords="28,5" data-marker="station" data-labelPos="NW"><a id="3011770" href="#">L&oslash;renskog</a></li>
+            <li labelClass="text station" data-coords="29,5" data-marker="station" data-labelPos="NW"><a id="2300230" href="#">Hanaborg</a></li>
+            <li labelClass="text station" data-coords="30,5" data-marker="station" data-labelPos="NW"><a id="2300200" href="#">Fjellhamar</a></li>
+            <li labelClass="text station" data-coords="31,5" data-marker="station" data-labelPos="NW"><a id="2310100" href="#">Str&oslash;mmen</a></li>
+            <li labelClass="text station" data-coords="32,5" data-marker="station" data-labelPos="NW"><a id="2310200" href="#">Sagdalen</a></li>
+            <li labelClass="text station" data-coords="33,5" data-marker="interchange" data-labelPos="NW"><a id="2310300" href="#">Lillestr&oslash;m</a></li>
         </ul>
         
         <ul data-color="#A61E27" data-label="R10" data-shiftCoords="0,2">

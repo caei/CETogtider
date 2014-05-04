@@ -435,12 +435,12 @@ THE SOFTWARE.
                 break;
         }
         //var style = (data.labelClass !== "" ? "class='" + data.labelClass + "' " : "") + "style='" + (data.labelClass === "" ? "font-size:8pt;font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;" + (pos !== "" ? pos : "") + ";position:absolute;top:" + (y + el.offset().top - (topOffset > 0 ? topOffset : 0)) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
-        var style = (data.labelClass !== "" ? "class='" + data.labelClass + "' " : "") + "style='" + (data.labelClass === "" ? "font-size:8pt;font-weight:" + fontWeight + ";font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;height:13px;" + (pos !== "" ? pos : "") + ";position:absolute;top:" + (y + el.offset().top - topOffset) + "px;left:" + (x + el.offset().left) + "px;z-index:3000;'";
+        var style = (data.labelClass !== "" ? "class='" + data.labelClass + "' " : "") + "style='" + (data.labelClass === "" ? "font-size:8pt;font-weight:" + fontWeight + ";font-family:Verdana,Arial,Helvetica,Sans Serif;text-decoration:none;" : "") + "width:100px;height:13px;" + (pos !== "" ? pos : "") + ";position:absolute;top:" + (y + el.offset().top - topOffset) + "px;left:" + (x + el.offset().left) + "px;";
 		var stationStop = (data.stopId !== "" ? "id='" + data.stopId + "' data-tooltip='#sid" + data.stopId + "' " : "");
         if (data.link !== "")
-            $("<a " + stationStop + style + " title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "' target='_new'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+            $("<a " + stationStop + style + "z-index:3000;' title='" + data.title.replace(/\\n/g,"<br />") + "' href='" + data.link + "'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
         else
-            $("<span " + stationStop + style + ">" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
+            $("<span " + stationStop + style + "z-index:2999;'>" + data.label.replace(/\\n/g,"<br />") + "</span>").appendTo(el);
         
     },
     _drawGrid: function (el, scale, gridNumbers) {

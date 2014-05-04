@@ -126,7 +126,7 @@
 }
 
 .flight-tracker {
-  position: absolute;
+  position: fixed;
   top: 60px;
   left: 150px;
   -webkit-transform: translate(-50%, -50%);
